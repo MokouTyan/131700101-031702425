@@ -39,11 +39,13 @@
       fill: #2990ca;
       stroke: steelblue;
       stroke-width: 1.5px;
+      transition: all 0.5s;
     }
-    
+    .node rect:hover{
+      transform: scale(1.1);
+    }
     .node text {
       font: 20px sans-serif;
-      transition: all 1s;
     }
     .node text:hover{
       transform: scale(1.05);
@@ -58,7 +60,7 @@
     body {
       display: block;
       margin: 8px;
-      background-image: url("src/background.png");
+      background-image: url("src/background.jpg");
       background-position: bottom 0;
       background-size: cover;
       background-repeat: no-repeat;
@@ -68,14 +70,14 @@
       -moz-background-size: cover;
       -ms-background-size: cover;
     }
-
+    html { overflow-x: hidden; overflow-y: hidden; }
     </style>
     <script type="text/javascript" src="js/d3.min.js"></script>
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   </head>
 
   <body>
-    <div id="textbody" style="z-index: 9999;position: fixed;padding:5px;right: 10px;top: 40%;">
+    <div id="textbody" style="z-index: 9999;position: fixed;padding:5px;right: 10px;top: 10px;">
     <textarea placeholder="在这里写入如下内容：
 导师：张三
 2016级博士生：天一、王二、吴五
@@ -85,12 +87,12 @@
 ...
 
 然后点击“生成学术家族树”按钮
-可通过鼠标滚轮进行缩放展示
+可通过鼠标拖到、滚轮进行缩放展示
 
 ↓快按下这个按钮试试吧(`・ω・´)！！↓" required></textarea>
     <div><button id='begin' style="width:500px;">生成学术家族树</button></div>
     </div>
-
+<div style="z-index: 9999;position: fixed;padding:5px;right: 10px;bottom:10px;text-shadow:2px 2px 0px #fff;font-size: 24pt;">Made by 莫多、永铭<br>Last upload 2019.10.18</div>
 <script>
 
 var treeData = [
@@ -102,8 +104,8 @@ var treeData = [
 
 //定义树图的全局属性（宽高）
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
-    width = 1280 - margin.right - margin.left,
-    height = 900 - margin.top - margin.bottom;
+    width = document.documentElement.clientWidth - margin.right - margin.left,
+    height = screen.availHeight - margin.top - margin.bottom;
 
 var i = 0,
     duration = 750,//过渡延迟时间
