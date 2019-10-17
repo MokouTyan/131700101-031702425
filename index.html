@@ -7,6 +7,9 @@
 
     <style>
     textarea {
+        background: #fff url(src/textarea.jpg) right -35px top 15px;
+        background-size: 250px;
+        background-repeat: no-repeat;
         -webkit-appearance: textarea;
         width:500px;
         height:200px;
@@ -54,9 +57,18 @@
   </head>
 
   <body>
-    <textarea></textarea>
-    <div><button id='begin'>重新建立树</button></div>
-
+    <div id="textbody">
+    <textarea placeholder="在这里写入如下内容：
+导师：张三
+2016级博士生：天一、王二、吴五
+2015级硕士生：李四、王五、许六
+2016级硕士生：刘一、李二、李三
+2017级本科生：刘六、琪七、司四
+...
+然后点击“生成学术家族树”按钮
+可通过鼠标滚轮进行缩放展示"></textarea>
+    <div><button id='begin'>生成学术家族树</button></div>
+    </div>
 
 <script>
 
@@ -184,10 +196,6 @@ $("#begin").click(function(){
 
     treeData = []//把数据置为空
     treeData.push(teacherObj)//放入数据
-
-    console.log(line1)
-    console.log(treeData)
-    
     root = treeData[0]
     update(root)
 });
