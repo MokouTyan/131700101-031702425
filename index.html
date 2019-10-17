@@ -35,6 +35,9 @@
       stroke: steelblue;
       stroke-width: 3px;
     }
+    .node circle:hover{
+      transform: scale(1.1);
+    }
     .node rect {
       fill: #2990ca;
       stroke: steelblue;
@@ -55,7 +58,11 @@
     .link {
       fill: none;
       stroke: #ccc;
-      stroke-width: 2px;
+      stroke-width: 4px;
+    }
+    .link:hover{
+      transition: all 0.5s;
+      stroke:#4d4d4d;
     }
     body {
       display: block;
@@ -87,12 +94,12 @@
 ...
 
 然后点击“生成学术家族树”按钮
-可通过鼠标拖到、滚轮进行缩放展示
+可通过鼠标拖动、滚轮进行缩放展示
 
 ↓快按下这个按钮试试吧(`・ω・´)！！↓" required></textarea>
     <div><button id='begin' style="width:500px;">生成学术家族树</button></div>
     </div>
-<div style="z-index: 9999;position: fixed;padding:5px;right: 10px;bottom:10px;text-shadow:2px 2px 0px #fff;font-size: 24pt;">Made by 莫多、永铭<br>Last upload 2019.10.18</div>
+<div style="z-index: 9999;position: fixed;padding:5px;right: 10px;bottom:10px;text-shadow:2px 2px 0px #fff;font-size: 24pt;">Made by&nbsp&nbsp&nbsp&nbsp&nbsp莫多、&nbsp永铭<br>Last upload 2019.10.18</div>
 <script>
 
 var treeData = [
