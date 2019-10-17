@@ -28,8 +28,8 @@
     }
     .node {
         cursor: pointer;
+        
     }
-
     .node circle {
       fill: #357CAE;
       stroke: steelblue;
@@ -40,9 +40,14 @@
       stroke: steelblue;
       stroke-width: 1.5px;
     }
-
+    
     .node text {
       font: 20px sans-serif;
+      transition: all 1s;
+    }
+    .node text:hover{
+      transform: scale(1.05);
+      font-weight: bold;
     }
 
     .link {
@@ -50,6 +55,19 @@
       stroke: #ccc;
       stroke-width: 2px;
     }
+    /*body {
+      display: block;
+      margin: 8px;
+      background-image: url("src/background.png");
+      background-position: bottom 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      -webkit-background-size: cover;
+      -o-background-size: cover;
+      -moz-background-size: cover;
+      -ms-background-size: cover;
+    }*/
 
     </style>
     <script type="text/javascript" src="js/d3.min.js"></script>
@@ -57,7 +75,7 @@
   </head>
 
   <body>
-    <div id="textbody">
+    <div id="textbody" style="z-index: 9999;position: fixed;padding:5px;right: 10px;top: 40%;">
     <textarea placeholder="在这里写入如下内容：
 导师：张三
 2016级博士生：天一、王二、吴五
@@ -65,9 +83,12 @@
 2016级硕士生：刘一、李二、李三
 2017级本科生：刘六、琪七、司四
 ...
+
 然后点击“生成学术家族树”按钮
-可通过鼠标滚轮进行缩放展示"></textarea>
-    <div><button id='begin'>生成学术家族树</button></div>
+可通过鼠标滚轮进行缩放展示
+
+↓快按下这个按钮试试吧(`・ω・´)！！↓" required></textarea>
+    <div><button id='begin' style="width:500px;">生成学术家族树</button></div>
     </div>
 
 <script>
@@ -95,7 +116,7 @@ var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.y, d.x]; });//创建新的斜线生成器
 
 var zoom = d3.behavior.zoom()
-				.scaleExtent([.1,1])
+				.scaleExtent([.1,2])
 				.on('zoom', function(){
 					svg.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
 			});
@@ -116,6 +137,10 @@ root.y0 = 0;
 $("#begin").click(function(){
     let text = document.getElementsByTagName('textarea')[0].value
     let line1 = text.split(/[(\r\n)\r\n]+/) // 根据回车分割
+    if ( line1.length == 1 )
+    {
+      line1=['导师：张三','2016级博士生：天一、王二、吴五','2015级硕士生：李四、王五、许六','2016级硕士生：刘一、李二、李三','2017级本科生：刘六、琪七、司四']
+    }
     let teacher = line1[0].split('：')
     let sign1 = 1
     let sign2 = 1
@@ -194,6 +219,8 @@ $("#begin").click(function(){
     
     teacherObj.name = teacher[1]
 
+    console.log(line1)
+
     treeData = []//把数据置为空
     treeData.push(teacherObj)//放入数据
     root = treeData[0]
@@ -224,7 +251,7 @@ function update(source) {
   
   nodeEnter.append("rect")
     .attr("x",-23)
-    .attr("y", -10)
+    .attr("y", -20)
     .attr("width",140)
     .attr("height",40)
     .attr("rx",10)
@@ -233,7 +260,7 @@ function update(source) {
   nodeEnter.append("text")
     //.attr("x", function(d) { return d.children || d._children ? 13 : 13; })
     .attr("x","50")
-    .attr("dy", "20")
+    .attr("dy", "8")
     .attr("text-anchor", "middle")
     .text(function(d) { return d.name; })
     .style("fill", "white")
@@ -246,7 +273,7 @@ function update(source) {
 
   nodeUpdate.select("rect")
             .attr("x",-23)
-            .attr("y", -10)
+            .attr("y", -20)
             .attr("width",140)
             .attr("height",40)
             .attr("rx",10)
@@ -265,7 +292,7 @@ function update(source) {
 
   nodeExit.select("rect")
           .attr("x",-23)
-          .attr("y", -10)
+          .attr("y", -20)
           .attr("width",140)
           .attr("height",40)
           .attr("rx",10)
